@@ -1,8 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getServerSession } from "next-auth"
+import { auth } from "@/lib/auth"
 import connectDB from "@/lib/db/mongodb"
 import Appointment from "@/lib/models/appointment.model"
-import { authOptions } from "@/lib/auth"
 import { NotificationService } from "@/lib/services/notification.service"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -24,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     }
@@ -61,7 +60,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     }

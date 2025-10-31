@@ -1,9 +1,10 @@
-import type { NextAuthOptions } from "next-auth"
+import NextAuth from "next-auth"
+import type { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import connectDB from "@/lib/db/mongodb"
-import Admin from "@/lib/models/admin.model"
+import Admin, { type IAdmin } from "@/lib/models/admin.model"
 
-export const authOptions: NextAuthOptions = {
+const authConfig: NextAuthConfig = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -11,14 +12,14 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials: Record<"email" | "password", string> | undefined) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials")
         }
 
         await connectDB()
 
-        const admin = await Admin.findOne({ email: credentials.email }).select("+password")
+        const admin = (await Admin.findOne({ email: credentials.email }).select("+password")) as IAdmin | null
 
         if (!admin || !admin.isActive) {
           throw new Error("Invalid credentials")
@@ -65,3 +66,5 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 }
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)

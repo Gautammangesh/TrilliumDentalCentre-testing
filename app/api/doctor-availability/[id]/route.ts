@@ -1,18 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getServerSession } from "next-auth"
+import { auth } from "@/lib/auth"
 import connectDB from "@/lib/db/mongodb"
 import DoctorAvailability from "@/lib/models/doctor-availability.model"
-import { authOptions } from "@/lib/auth"
 
-export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     }
 
     await connectDB()
-    const { id } = await params
+    const { id } = params
     const body = await request.json()
 
     const availability = await DoctorAvailability.findByIdAndUpdate(id, body, {
@@ -30,15 +29,15 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
     }
 
     await connectDB()
-    const { id } = await params
+    const { id } = params
 
     const availability = await DoctorAvailability.findByIdAndDelete(id)
 
