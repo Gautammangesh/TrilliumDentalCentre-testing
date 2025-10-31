@@ -1,0 +1,32 @@
+{
+  "name": "Testimonial",
+  "type": "object",
+  "properties": {
+    "patient_name": {
+      "type": "string"
+    },
+    "treatment": {
+      "type": "string"
+    },
+    "testimonial": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "patient_name",
+    "testimonial",
+    "rating"
+  ]
+}

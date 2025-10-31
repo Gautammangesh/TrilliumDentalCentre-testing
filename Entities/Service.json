@@ -1,0 +1,58 @@
+{
+  "name": "Service",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Service name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Full Mouth Rehabilitation",
+        "Implants",
+        "Root Canal",
+        "Orthodontics",
+        "Cosmetic",
+        "Gum Care",
+        "Pediatric",
+        "Dentures",
+        "Surgery",
+        "Diagnostics"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "specialists": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "price_range": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "description"
+  ]
+}

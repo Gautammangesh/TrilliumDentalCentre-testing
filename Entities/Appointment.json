@@ -1,0 +1,90 @@
+{
+  "name": "Appointment",
+  "type": "object",
+  "properties": {
+    "patient_name": {
+      "type": "string",
+      "description": "Full name of the patient"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number for WhatsApp/SMS notifications"
+    },
+    "service": {
+      "type": "string",
+      "enum": [
+        "Full Mouth Rehabilitation",
+        "Dental Implants",
+        "Root Canal Treatment",
+        "Orthodontic Care (Braces/Invisalign)",
+        "Teeth Whitening",
+        "Digital Smile Designing",
+        "Gum Treatment (Periodontics)",
+        "Pediatric Dentistry",
+        "Dentures",
+        "Crowns, Inlays & Onlays",
+        "Porcelain Veneers",
+        "Oral Surgery",
+        "TMJ Dysfunction Therapy",
+        "Tobacco Cessation Therapy",
+        "Emergency Dental Care",
+        "Preventive Checkup",
+        "Other"
+      ]
+    },
+    "preferred_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "preferred_time": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid"
+      ],
+      "default": "pending"
+    },
+    "discount_applied": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "whatsapp_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "sms_sent": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "patient_name",
+    "phone",
+    "service",
+    "preferred_date"
+  ]
+}
